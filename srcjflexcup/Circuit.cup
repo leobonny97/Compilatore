@@ -1,0 +1,118 @@
+import java.util.ArrayList;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import nodes.*;
+import parse.*;
+
+parser code {:
+	private Logger log = Logger.getLogger("Circuit.cup");
+:}
+
+//Terminali
+terminal FUNCTION,LPAR,RPAR,END,ID,COLON,GLOBAL,SEMI,COMMA,NIL,INT,BOOL,FLOAT,STRING;
+terminal ASSIGN,NOP,WHILE,DO,IF,THEN,ELSE,FOR,LOCAL,READ,WRITE,RETURN,TRUE,FALSE;
+terminal INT_CONST,FLOAT_CONST,STRING_CONST,PLUS,MINUS,TIMES,DIV,AND,OR,GT,GE,LT,LE,EQ,NE,NOT;
+
+//Non terminali
+nonterminal Programma,Global,Functions,Def_fun,Par_decls,Var_decls,Var_decls_local,Var_init_value,Type,Types,Statements,Stat,Vars,Exprs,Expr;
+
+//Precedenze
+precedence right SEMI;
+precedence nonassoc ID;
+precedence right COMMA;
+precedence left OR;
+precedence left AND;
+precedence right NOT;
+precedence left GT,GE,LT,LE,EQ,NE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIV;
+
+// Grammatica
+Programma ::= Global:vars Functions:funs            {: RESULT = new ProgramOP((ArrayList<FunDefinOP>)funs,(ArrayList<VarDeclOP>)vars); log.info("---------------------ProgramOP\n" + RESULT); :}
+;
+
+Global ::= GLOBAL Var_decls:vars END                {:RESULT = vars;   log.info("---------------------vars\n"+ RESULT); :}
+        |/* EPSILON */ ;
+
+Functions ::= Def_fun:fun Functions:funs            {: ((ArrayList) funs).add(0,fun); RESULT = funs;   log.info("---------------------fun\n" + fun); :}
+            | Def_fun:fun                           {: RESULT = new ArrayList<FunDefinOP>() {{ add((FunDefinOP)fun);}};  log.info("---------------------last fun\n" + fun); :}
+;
+
+Def_fun ::= FUNCTION ID:id LPAR Par_decls:pd RPAR COLON Type:ty Statements:body END    {: RESULT = new FunDefinOP(new Identifier(id+"", (String) ty, TypeChecker.FUNCTION, (ArrayList<ParDeclOP>)pd),(ArrayList<ParDeclOP>)pd,new BodyOP((ArrayList<Stat>)body)); log.info("---------------------FunDefinOP\n" + RESULT); :}
+        | FUNCTION ID:id LPAR RPAR COLON Type:ty Statements:body END                   {: RESULT = new FunDefinOP(new Identifier(id+"", (String) ty, TypeChecker.FUNCTION),new ArrayList<ParDeclOP>(),new BodyOP((ArrayList<Stat>)body)); log.info("---------------------FunDefinOP no arg\n" + RESULT); :}
+        ;
+
+Par_decls ::= ID:id COLON Type:ty COMMA Par_decls:params      {: ((ArrayList) params).add(0,new ParDeclOP(new Identifier(id+"", (String) ty, TypeChecker.VARIABLE))); RESULT = params;   log.info("---------------------ParDeclOP\n" + ((ArrayList) params).get(0)); :}
+            | ID:id COLON Type:ty                             {: ArrayList<ParDeclOP> params = new ArrayList<ParDeclOP>() {{ add(new ParDeclOP(new Identifier(id+"", (String) ty, TypeChecker.VARIABLE)));}}; RESULT = params; log.info("---------------------last ParDeclOP\n" + ((ArrayList) params).get(0)); :}
+            ;
+
+Var_decls ::= ID:id COLON Type:ty Var_init_value:e SEMI Var_decls:vars       {: ((ArrayList) vars).add(0,new VarDeclOP(new Identifier(id+"", (String) ty, TypeChecker.VARIABLE),(Expr)e)); RESULT = vars;   log.info("---------------------VarDeclOP\n" + ((ArrayList) vars).get(0)); :}
+            | ID:id COLON Type:ty Var_init_value:e                           {: ArrayList<VarDeclOP> vars = new ArrayList<VarDeclOP>() {{ add(new VarDeclOP(new Identifier(id+"", (String) ty, TypeChecker.VARIABLE),(Expr)e));}};  RESULT=vars; log.info("---------------------last VarDeclOP\n" + ((ArrayList) vars).get(0)); :}
+            ;
+
+Var_decls_local ::= ID:id COLON Type:ty Var_init_value:e SEMI Var_decls_local:vars     {: ((ArrayList) vars).add(0,new VarDeclOP(new Identifier(id+"", (String) ty, TypeChecker.VARIABLE),(Expr)e)); RESULT = vars;   log.info("---------------------VarDeclOPLocal\n" + ((ArrayList) vars).get(0)); :}
+            | ID:id COLON Type:ty Var_init_value:e SEMI                                {:  ArrayList<VarDeclOP> vars = new ArrayList<VarDeclOP>() {{ add(new VarDeclOP(new Identifier(id+"", (String) ty, TypeChecker.VARIABLE),(Expr)e));}}; RESULT=vars; log.info("---------------------last VarDeclOPLocal\n" + ((ArrayList) vars).get(0)); :}
+            ;
+
+Var_init_value ::= ASSIGN Expr:e                {:RESULT = e;   log.info("---------------------expr\n"+ RESULT); :}
+                |/* EPSILON */ ;
+
+Type ::= NIL                                    {: RESULT = TypeChecker.Nil; log.info("---------------------" + RESULT); :}
+         | INT                                  {: RESULT = TypeChecker.INT; log.info("---------------------" + RESULT); :}
+         | BOOL                                 {: RESULT = TypeChecker.BOOL; log.info("---------------------" + RESULT); :}
+         | FLOAT                                {: RESULT = TypeChecker.FLOAT; log.info("---------------------" + RESULT); :}
+         | STRING                               {: RESULT = TypeChecker.STRING; log.info("---------------------" + RESULT); :}
+;
+
+Types ::= Type:ty COMMA Types:tys                  {: ((ArrayList) tys).add(0,ty); RESULT = tys;   log.info("---------------------" + RESULT); :}
+        | Type:ty                                  {: RESULT = new ArrayList<String>() {{ add((String)ty);}}; log.info("---------------------" + RESULT); :}
+;
+
+Statements ::= Stat:stat SEMI Statements:stats      {: ((ArrayList) stats).add(0,stat); RESULT = stats;   log.info("---------------------stat\n" + stat); :}
+            | Stat:stat                             {: RESULT = new ArrayList<Stat>() {{ add((Stat)stat);}};  log.info("---------------------last stat\n" + stat); :}
+;
+
+Stat ::= NOP                                                        {: RESULT = new Nop(); log.info("---------------------NopOP\n"); :}
+    | WHILE Expr:e DO Statements:body1 END                          {: RESULT = new WhileOP((Expr)e,new BodyOP((ArrayList<Stat>)body1)); log.info("---------------------WhileOP\n" + RESULT); :}
+    | IF Expr:e THEN Statements:body1 ELSE Statements:body2 END     {: RESULT = new IfThenElseOP((Expr)e,new BodyOP((ArrayList<Stat>)body1),new BodyOP((ArrayList<Stat>)body2)); log.info("---------------------IfThenElseOP\n" + RESULT); :}
+    | IF Expr:e THEN Statements:body END                            {: RESULT = new IfThenOP((Expr)e,new BodyOP((ArrayList<Stat>)body)); log.info("---------------------IfThenOP\n" + RESULT); :}
+    | FOR ID:id ASSIGN Expr:e1 COMMA Expr:e2 DO Statements:body END {: RESULT = new ForOP(new Identifier(id+""),(Expr)e1,(Expr)e2,new BodyOP((ArrayList<Stat>)body)); log.info("---------------------ForOP\n" + RESULT); :}
+    | LOCAL Var_decls_local:vardeclops Statements:body END          {: RESULT = new LocalBlock((ArrayList<VarDeclOP>)vardeclops,new BodyOP((ArrayList<Stat>)body)); log.info("---------------------LocalBlock\n" + RESULT); :}
+    | ID:id ASSIGN Expr:e                                           {: RESULT = new AssignOP(new Identifier(id+""),(Expr)e); log.info("---------------------AssignOP\n" + RESULT); :}
+    | ID:id LPAR Exprs:exprs RPAR                                   {: RESULT = new FunCallOP(new Identifier(id+""),(ArrayList<Expr>) exprs); log.info("---------------------FunCallOP\n" + RESULT); :}
+    | Vars:vars READ                                                {: RESULT = new ReadOP((ArrayList<Identifier>)vars); log.info("---------------------ReadOP\n" + RESULT); :}
+    | Exprs:exprs WRITE                                             {: RESULT = new WriteOP((ArrayList<Expr>) exprs); log.info("---------------------WriteOP\n" + RESULT); :}
+    | RETURN Expr:e1                                                {: RESULT = new ReturnOP((Expr)e1); log.info("---------------------ReturnOP\n" + RESULT); :}
+    ;
+
+Vars ::= ID:id COMMA Vars:vars          {: ((ArrayList) vars).add(0,new Identifier((String)id)); RESULT = vars;   log.info("---------------------var\n" + id); :}
+        | ID :id                        {: RESULT = new ArrayList<Identifier>() {{ add(new Identifier((String)id));}};  log.info("---------------------last var\n" + id); :}
+;
+
+Exprs ::= Expr:e1 COMMA Exprs:exprs     {: ((ArrayList) exprs).add(0,e1); RESULT = exprs;   log.info("---------------------expr\n" + e1); :}
+        | Expr:e1                       {: RESULT = new ArrayList<Expr>() {{ add((Expr)e1);}};  log.info("---------------------last expr\n" + e1); :}
+    ;
+
+Expr ::= NIL                            {: RESULT =new NilOP(); log.info("---------------------NilOP\n"); :}
+    | TRUE                              {: RESULT =new BooleanConst(true);  log.info("---------------------BoolConst\n" + true);  :}
+    | FALSE                             {: RESULT =new BooleanConst(false);  log.info("---------------------BoolConst\n" + false);  :}
+    | INT_CONST:intConst                {: RESULT =new IntConstOP(Integer.parseInt(intConst+"")); log.info("---------------------IntConstOP\n" + intConst); :}
+    | FLOAT_CONST:floatConst            {: RESULT =new FloatConstOP(Float.parseFloat(floatConst+"")); log.info("---------------------FloatConstOP\n" + floatConst); :}
+    | STRING_CONST:stringConst          {: RESULT =new StringConstOP(stringConst+"");  log.info("---------------------StringConst\n" + stringConst);  :}
+    | ID:id                             {: RESULT =new Identifier(id+""); log.info("---------------------Identifier\n" + id); :}
+    | ID:id LPAR Exprs:exprs RPAR       {: RESULT = new FunCallOP(new Identifier(id+""),(ArrayList<Expr>) exprs); log.info("---------------------FunCallOP\n" + RESULT); :}
+    | Expr:e1 PLUS Expr:e2              {: RESULT = new AddOP((Expr)e1,(Expr)e2); log.info("---------------------AddOP\n" + RESULT); :}
+    | Expr:e1 MINUS Expr:e2             {: RESULT = new DiffOP((Expr)e1,(Expr)e2); log.info("---------------------DiffOP\n" + RESULT); :}
+    | Expr:e1 TIMES Expr:e2             {: RESULT = new MulOP((Expr)e1,(Expr)e2); log.info("---------------------MulOP\n" + RESULT); :}
+    | Expr:e1 DIV Expr:e2               {: RESULT = new DivOP((Expr)e1,(Expr)e2); log.info("---------------------DivOP\n" + RESULT); :}
+    | Expr:e1 AND Expr:e2               {: RESULT = new AndOP((Expr)e1,(Expr)e2); log.info("---------------------AndOP\n" + RESULT); :}
+    | Expr:e1 OR Expr:e2                {: RESULT = new OrOP((Expr)e1,(Expr)e2); log.info("---------------------OrOP\n" + RESULT); :}
+    | Expr:e1 GT Expr:e2                {: RESULT = new GtOP((Expr)e1,(Expr)e2); log.info("---------------------GtOP\n" + RESULT); :}
+    | Expr:e1 GE Expr:e2                {: RESULT = new GeOP((Expr)e1,(Expr)e2); log.info("---------------------GeOP\n" + RESULT); :}
+    | Expr:e1 LT Expr:e2                {: RESULT = new LtOP((Expr)e1,(Expr)e2); log.info("---------------------LtOP\n" + RESULT); :}
+    | Expr:e1 LE Expr:e2                {: RESULT = new LeOP((Expr)e1,(Expr)e2); log.info("---------------------LeOP\n" + RESULT); :}
+    | Expr:e1 EQ Expr:e2                {: RESULT = new EqOP((Expr)e1,(Expr)e2); log.info("---------------------EqOP\n" + RESULT); :}
+    | Expr:e1 NE Expr:e2                {: RESULT = new NeOP((Expr)e1,(Expr)e2); log.info("---------------------NeOP\n" + RESULT); :}
+    | MINUS Expr:e1                     {: RESULT = new UminusOP((Expr)e1); log.info("---------------------UminusOP\n" + RESULT); :}
+    | NOT Expr:e1                       {: RESULT = new NotOP((Expr)e1); log.info("---------------------NotOP\n" + RESULT); :}
+    ;

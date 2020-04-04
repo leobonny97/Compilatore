@@ -1,0 +1,11 @@
+function lollo ( ): int
+    nop
+end
+
+function lollo ( ): int
+    nop
+end
+
+function main ( ): int
+    nop
+end

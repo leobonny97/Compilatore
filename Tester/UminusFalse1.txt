@@ -1,0 +1,9 @@
+//non è possibile effettuare l'uminus di una stringa
+function inverso (x: int): string
+    return -"aaa"
+end
+
+
+function main ( ): int
+    nop
+end

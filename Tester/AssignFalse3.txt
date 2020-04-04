@@ -1,0 +1,8 @@
+global
+    //l'assegnamento tra intero e string non è accettato
+    numero : int = "Hello"
+end
+
+function main( ): int
+    nop
+end

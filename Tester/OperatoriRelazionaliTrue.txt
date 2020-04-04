@@ -1,0 +1,22 @@
+function main( ): int
+    //è possibile confrontare due interi
+	if 0 < 1 then
+	    "Il primo int è minore del secondo." ==>
+	end;
+    //è possibile confrontare due float
+	if 0.0 < 0.4 then
+    	"Il primo float è minore del secondo." ==>
+    end;
+    //è possibile confrontare due stringhe
+    if "mamma" < "mamme" then
+    	"La prima stringa è minore della seconda." ==>
+    end;
+    //è possibile confrontare un intero ed un float
+    if 1 < 2.2 then
+    	"L'intero è minore del float." ==>
+    end;
+    //è possibile confrontare un float ed un intero
+    if 2.2 < 10 then
+    	"Il float è minore dell'intero." ==>
+    end
+end

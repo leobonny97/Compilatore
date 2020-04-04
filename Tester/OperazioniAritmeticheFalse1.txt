@@ -1,0 +1,9 @@
+global
+    result : string
+end
+
+function main( ): int
+    //Non è possibile confrontare stringa e stringa
+    result = "Hello" * "World"
+end
+

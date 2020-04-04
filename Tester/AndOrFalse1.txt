@@ -1,0 +1,7 @@
+function main( ): int
+    //bool,int
+    if true and 4 then
+        return 1
+    end
+end
+

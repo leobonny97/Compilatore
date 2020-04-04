@@ -1,0 +1,8 @@
+global
+    //l'assegnamento tra intero e bool non è accettato
+    numero : int = true
+end
+
+function main( ): int
+    nop
+end

@@ -1,0 +1,9 @@
+global
+    //l'assegnamento tra intero e float non è accettato
+    numero : int = 4.5
+end
+
+function main( ): int
+    nop
+end
+

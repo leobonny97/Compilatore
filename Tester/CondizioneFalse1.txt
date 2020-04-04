@@ -1,0 +1,6 @@
+function main( ): int
+    //La condizione è un intero e non viene accettato
+	if 2 then
+	    "Condizione accettata" ==>
+	end
+end

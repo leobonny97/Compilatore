@@ -1,0 +1,6 @@
+function main( ): int
+    //il confronto tra interi e string non è possibile
+	if 0 < "aa" then
+	    "L'intero è minore della stringa." ==>
+	end
+end

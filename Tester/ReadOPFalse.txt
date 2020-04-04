@@ -1,0 +1,9 @@
+global
+    bool1 : bool
+end
+
+function main( ): int
+    //non è possibile leggere boolean
+    "Inserisci booleano: " ==>;
+    bool1 <==
+end

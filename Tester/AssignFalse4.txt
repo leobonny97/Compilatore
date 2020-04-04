@@ -1,0 +1,8 @@
+global
+    //l'assegnamento tra int o float con nil non è accettato
+    numero : float = nil
+end
+
+function main( ): int
+    nop
+end

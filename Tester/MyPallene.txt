@@ -1,0 +1,42 @@
+global
+	result  : float = 0.0;
+	numop : int = 0
+end
+
+function eseguioperazioni (x: float,y: float): float
+	"Scegli operazione tra queste: \n0 per l'addizione\n1 per la sottrazione\n2 per la moltiplicazione\n3 per la divisione " ==>;
+	numop <==;
+	if numop == 0 then
+		 return x+y
+	else
+		if numop == 1 then
+		 	return x-y
+		else
+			if numop == 2 then
+		 		return x*y
+			else
+				if numop == 3 then
+		 			return x/y
+				else
+					return 0.0
+				end
+			end
+		end
+	end
+end
+
+function main( ): int
+	local termina : int = 1;
+	    numero1 : float = 3.1;
+	    numero2 : float = 0.0;
+		while termina==1 do
+			"Inserisci i due operatori: " ==>;
+ 			numero1,numero2 <== ;
+ 			result = eseguioperazioni(numero1,numero2 );
+			"Il risultato è: ", result ==>;
+			"Inserisci 0 per terminare o 1 per continuare e visualizzare il menù: " ==>;
+			termina <==
+		end
+	end
+end
+

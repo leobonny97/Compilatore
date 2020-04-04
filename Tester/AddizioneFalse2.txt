@@ -1,0 +1,9 @@
+global
+    result : float
+end
+
+function main( ): int
+    //L'addizione tra float e bool non è accettata
+    result = 4.5 + false
+end
+

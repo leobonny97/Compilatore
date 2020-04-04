@@ -1,0 +1,6 @@
+function main( ): int
+    //La condizione restituisce un boolean ed è accettato
+	if true then
+	    "Condizione accettata" ==>
+	end
+end

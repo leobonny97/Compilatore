@@ -1,0 +1,8 @@
+//tipo da restituire e valore restituito non coincidono
+function lollo ( ): int
+    return false
+end
+
+function main ( ): int
+    nop
+end

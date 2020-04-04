@@ -1,0 +1,6 @@
+function main( ): int
+    //Si può effettuare il not di un boolean
+	if not false then
+	    "Condizione accettata" ==>
+	end
+end

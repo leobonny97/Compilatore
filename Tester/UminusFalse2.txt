@@ -1,0 +1,9 @@
+//non è possibile effettuare l'uminus di un boolean
+function inverso (x: int): bool
+    return - true
+end
+
+
+function main ( ): int
+    nop
+end

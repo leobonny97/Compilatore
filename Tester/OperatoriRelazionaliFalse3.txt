@@ -1,0 +1,6 @@
+function main( ): int
+    //il confronto tra boolean e altri tipi non è possibile
+	if true < "aa" then
+	    "Il boolean è minore della stringa." ==>
+	end
+end

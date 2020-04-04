@@ -1,0 +1,12 @@
+function main( ): int
+    //bool,bool
+    if true and false then
+        return 1
+    end;
+
+    //bool,bool
+    if false or true then
+        return 1
+    end
+end
+

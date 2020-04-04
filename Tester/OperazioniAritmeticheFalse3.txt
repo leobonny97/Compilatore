@@ -1,0 +1,9 @@
+global
+    result : string
+end
+
+function main( ): int
+    //Non è possibile confrontare stringa e float
+    result = "Hello" * 4.5
+end
+

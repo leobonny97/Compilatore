@@ -1,0 +1,7 @@
+global
+	result3 : bool
+end
+//vale per le variabili e per le funzioni
+function main ( ): int
+    	result3 = TrueOrFalse(true,false)
+end

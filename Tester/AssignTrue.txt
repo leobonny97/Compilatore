@@ -1,0 +1,12 @@
+global
+    numero1 : int = 1;
+    numero2 : float = 4.5;
+    stringa1 : string = "Hello";
+    bool1 : bool = true;
+    stringa2 : string = nil
+end
+
+function main( ): int
+    nop
+end
+

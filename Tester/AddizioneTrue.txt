@@ -1,0 +1,52 @@
+global
+	result1 : int;
+    numero1 : int = 4;
+    numero2 : int = 3;
+
+    result2 : float;
+    numero3 : float = 4.5;
+    numero4 : float = 3.5;
+
+    result3 : string;
+    stringa1 : string = "Hello";
+    stringa2 : string = "World"
+end
+
+function main( ): int
+    //int,int
+    result1 = numero1+numero2;
+    "La somma tra " + numero1 + " e " + numero2 + " risulta: ", result1 ==>;
+
+    //float,float
+    result2 = numero3+numero4;
+    "La somma tra " + numero3 + " e " + numero4 + " risulta: ", result2 ==>;
+
+    //stringa,stinga
+    result3 = stringa1+stringa2;
+    "La somma tra " + stringa1 + " e " + stringa2 + " risulta: ", result3 ==>;
+
+     //int,float
+    result2 = numero1+numero3;
+     "La somma tra " + numero1 + " e " + numero3 + " risulta: ", result2 ==>;
+
+     //float,int
+    result2 = numero3+numero1;
+    "La somma tra " + numero3 + " e " + numero1 + " risulta: ", result2 ==>;
+
+    //int,string
+    result3 = numero1+stringa1;
+    "La somma tra " + numero1 + " e " + stringa1 + " risulta: ", result3 ==>;
+
+    //float,string
+    result3 = numero3+stringa1;
+    "La somma tra " + numero3 + " e " + stringa1 + " risulta: ", result3 ==>;
+
+    //string,int
+    result3 = stringa1+numero1;
+    "La somma tra " + stringa1 + " e " + numero1 + " risulta: ", result3 ==>;
+
+    //string,float
+    result3 = stringa1+numero3;
+    "La somma tra " + stringa1 + " e " + numero3 + " risulta: ", result3 ==>
+end
+

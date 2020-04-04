@@ -1,0 +1,9 @@
+global
+    result : int
+end
+
+function main( ): int
+    //L'addizione tra int e bool non è accettata
+    result = 4 + true
+end
+

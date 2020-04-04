@@ -1,0 +1,115 @@
+function somma (x: int,y: int): int
+    return x+y
+end
+
+function moltiplicazione (x: int,y: int): int
+    local
+        c : int;
+        result : int = x;
+        for c=1, c<y do
+     	    result = somma(result, x);
+    	    c=c+1
+        end;
+        return result
+    end
+end
+
+function divisione (x: int,y: int): int
+    if x<0 then
+        return -1
+    else
+        if y<0 then
+            return -1
+        else
+            return x/y
+        end
+    end
+end
+
+function elevamentoP (x: int,y: int): int
+    local
+        c : int;
+        result : int = x;
+        for c=1, c<y do
+     	    result = result * x;
+    	    c=c+1
+        end;
+        return result
+    end
+end
+
+function fibonacci (x: int): nil
+    local
+        c : int;
+        prev : int = 0;
+        succ : int = 1;
+        result : int;
+        if x<=0 then
+            return nil
+        end;
+        if x==1 then
+            "0" ==>
+        else
+            if x>1 then
+                "0\n1" ==>;
+                for c=2, c<x do
+     	            result = prev + succ;
+     	            result ==>;
+    	            prev=succ;
+    	            succ=result;
+    	            c = c + 1
+                end
+            end
+        end
+    end
+end
+
+function main( ): int
+	local termina : int = 1;
+	    numero1 : int = 0;
+	    numero2 : int = 0;
+	    result : int;
+	    numop : int;
+		while termina==1 do
+    	    "Scegli operazione tra queste: \n0 per l'addizione\n1 per la moltiplicazione\n2 per la divisione\n3 per l'elevamento a potenza\n4 per la successione di Fibonacci" ==>;
+            numop <==;
+            if numop == 0 then
+            	"Inserisci i due operatori per la somma: " ==>;
+             	numero1,numero2 <== ;
+            	result = somma(numero1,numero2);
+                "La somma risulta: ", result ==>
+            else
+            	if numop == 1 then
+                    "Inserisci i due operatori per la moltiplicazione: " ==>;
+                    numero1,numero2 <== ;
+                 	result = moltiplicazione(numero1,numero2);
+                 	"La moltiplicazione" + " risulta: ", result ==>
+            	else
+            		if numop == 2 then
+                        "Inserisci i due operatori per la divisione: " ==>;
+                        numero1,numero2 <== ;
+                        result = divisione(numero1,numero2);
+                        "La divisione risulta: ", result ==>
+            		else
+            			if numop == 3 then
+                            "Inserisci i due operatori per l'elevamento a potenza: " ==>;
+                            numero1,numero2 <== ;
+                            result = elevamentoP(numero1,numero2);
+                            "L'elevamento a potenza risulta: ", result ==>
+            			else
+            			    if numop == 4 then
+                                "Quanti numeri della serie di Fibonacci vuoi inserire? " ==>;
+                                numero1 <== ;
+                                fibonacci(numero1)
+                            else
+            					"Questo numero non corrisponde a nessuna operazione. " ==>
+            				end
+            			end
+            		end
+            	end
+            end;
+			"Inserisci 0 per terminare o 1 per continuare e visualizzare il menù: " ==>;
+			termina <==
+		end
+	end
+end

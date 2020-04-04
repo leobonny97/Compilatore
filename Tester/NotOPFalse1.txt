@@ -1,0 +1,6 @@
+function main( ): int
+    //Non è possibile fare il not di un int
+	if not 5 then
+	    "Condizione accettata" ==>
+	end
+end

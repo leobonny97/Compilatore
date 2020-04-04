@@ -1,0 +1,6 @@
+function main( ): int
+    //il confronto tra float e string non è possibile
+	if 0.0 < "aa" then
+	    "Il float è minore della stringa." ==>
+	end
+end

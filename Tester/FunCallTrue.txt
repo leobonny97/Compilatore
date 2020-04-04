@@ -1,0 +1,24 @@
+global
+	result1 : float;
+	result2 : string;
+	result3 : bool
+end
+
+function somma (x: float,y: float): float
+    return x+y
+end
+
+function aggiungiWorld (x: string): string
+    return x+" World"
+end
+
+function TrueOrFalse (x: bool,y: bool): bool
+    return x and y
+end
+
+function main( ): int
+    //è possibile confrontare due tipi uguali
+	result1 = somma(4.5,2.5);
+	result2 = aggiungiWorld("Hello");
+	result3 = TrueOrFalse(true,false)
+end

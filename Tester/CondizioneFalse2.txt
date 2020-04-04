@@ -1,0 +1,6 @@
+function main( ): int
+    //La condizione è un float e non viene accettato
+	if 2.3 then
+	    "Condizione accettata" ==>
+	end
+end

@@ -1,0 +1,9 @@
+global
+    result : string
+end
+
+function main( ): int
+    //L'addizione tra string e bool non è accettata
+    result = "Hello" + true
+end
+

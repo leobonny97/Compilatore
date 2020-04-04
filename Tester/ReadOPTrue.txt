@@ -1,0 +1,15 @@
+global
+    numero1 : int;
+    numero2 : float;
+    stringa1 : string
+end
+
+function main( ): int
+    //è possibile leggere int, float e string
+    "Inserisci intero: " ==>;
+    numero1 <== ;
+    "Inserisci float: " ==>;
+    numero2 <== ;
+     "Inserisci stringa: " ==>;
+    stringa1 <==
+end

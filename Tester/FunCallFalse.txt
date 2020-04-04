@@ -1,0 +1,13 @@
+global
+	result : int
+end
+
+function somma (x: float,y: float): float
+    return x+y
+end
+
+//non si può assegnare float ad int
+function main( ): int
+    //non è possibile confrontare due tipi diversi
+	result = somma(4.5,2.5)
+end

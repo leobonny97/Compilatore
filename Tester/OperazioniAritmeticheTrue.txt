@@ -1,0 +1,19 @@
+global
+    result1 : int;
+    result2 : float
+end
+
+function main( ): int
+    //è possibile confrontare due interi
+    result1 = 4 * 4;
+
+    //è possibile confrontare due float
+    result2 = 2 * 2.5;
+
+    //è possibile confrontare intero e float
+    result2 = 4 * 2.5;
+
+    //è possibile confrontare float e intero
+    result2 = 2.5 * 4
+end
+

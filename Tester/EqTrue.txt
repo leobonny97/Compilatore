@@ -1,0 +1,8 @@
+function main( ): int
+    //è possibile confrontare due bool
+    if true == true then
+    	"I due bool sono uguali." ==>
+    end
+end
+
+//I casi errati sono uguali a OperatoriRelazionaliFalse

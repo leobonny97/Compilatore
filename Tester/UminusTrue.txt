@@ -1,0 +1,13 @@
+//è possibile effettuare l'uminus di un intero
+function inverso (x: int): int
+    return -x
+end
+
+//è possibile effettuare l'uminus di un float
+function inverso2 (x: float): float
+    return -x
+end
+
+function main ( ): int
+    nop
+end

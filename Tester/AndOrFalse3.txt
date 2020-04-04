@@ -1,0 +1,7 @@
+function main( ): int
+    //bool,string
+    if true and "Hello" then
+        return 1
+    end
+end
+
